@@ -25,6 +25,12 @@
           </p>
         </a>
         <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a href="{{ route('purchases.index')}}" class="nav-link ">
+              <i class="far fa-circle"></i>
+              <p>Product Purchases Record</p>
+            </a>
+          </li>
           <li class="nav-item">
             <a href="{{ route('stocks.index')}}" class="nav-link ">
               <i class="far fa-circle"></i>

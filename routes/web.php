@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\StocksController;
+use \App\Http\Controllers\PurchasesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,4 +27,9 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
- Route::resource('stocks',  StocksController::class);
+
+Route::middleware(['auth:sanctum'])->group(function() {
+
+    Route::resource('stocks',  StocksController::class);
+    Route::resource('purchases', PurchasesController::class);
+});

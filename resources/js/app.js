@@ -1,10 +1,13 @@
 import './bootstrap';
 import { createApp } from 'vue';
 import exampleComponent from './components/exampleComponent.vue';
+import addPurchase from './components/purchases/addPurchase.vue';
+import store from './store'
 
-createApp (exampleComponent).mount('#app');
+createApp (exampleComponent).use(store).mount('#app');
 
-import Alpine from 'alpinejs';
+createApp (addPurchase).mount('#addPurchase');
+
 
 window.Alpine = Alpine;
 
