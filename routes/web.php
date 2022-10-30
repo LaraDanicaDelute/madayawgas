@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use \App\Http\Controllers\StocksController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,7 +26,4 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
-
-Route::get('/template', function () {
-    return view ('layouts.master');
-});
+ Route::resource('stocks',  StocksController::class);
