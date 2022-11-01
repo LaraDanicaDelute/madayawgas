@@ -2,7 +2,7 @@
 <script src="{{ asset('resources/js/app.js')}}"></script>
 <script src="{{ asset('resources/css/app.js')}}"></script>
 @vite('resources/js/app.js')
-@('resources/css/app.js')
+@vite('resources/css/app.js')
 <!-- jQuery -->
 <script src="{{ asset('admin/plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->
@@ -15,6 +15,10 @@
 <script src="{{ asset('admin/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
 <script src="{{ asset('admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+
+
 <script>
     $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
 

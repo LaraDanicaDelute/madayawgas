@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Models\Stock;
 
 
@@ -126,5 +127,14 @@ class StocksController extends Controller
         flash(message: 'Product Stock successfully deleted!')->success();
         return redirect()->route('stocks.index');
 
+    }
+
+    public function getStocksJson() {
+        $stocks = Stock::all();
+
+        return response()->json([
+            'success' => true,
+            'data' => $stocks
+        ],Response::HTTP_OK);
     }
 }

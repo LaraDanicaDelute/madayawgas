@@ -1,3 +1,4 @@
+
 @extends('layouts.master')
 @section('content')
 
@@ -21,13 +22,64 @@
     
     <!-- Main content -->
     <div class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-6">
-            <div id="addPurchase"></div>
-          </div>
-        </div>
-        <!-- /.row -->
+      <div class="container-fluid" >
+      <div class="row">
+      <div class="col-lg-8" id="addPurchase"> 
+
+      </div>
+      <div class="col-lg-4">
+                <div class="card card-primary card-outline">
+                <div class="card-body">
+                <h5 class="card-title">Calculator</h5>
+                <br>
+                
+                <form role="form" action="<?php  $_SERVER['PHP_SELF'] ;?>"method="GET">
+                
+                <div class="card-body">
+                    
+                  <div class="form-group">
+                    <label>Enter First number <span class="text-danger">*</span></label>
+                    <input type="number" id="num1" name="num1"  class="form-control" placeholder="enter item price">
+                  </div>
+
+                  <div class="form-group">
+                    <label>Enter Second number<span class="text-danger">*</span></label>
+                    <input type="number" id="num2" name="num2" class="form-control"  placeholder="enter number of items">
+                  </div>
+                  <input type="submit" value="add" name="operator" class="btn btn-sm btn-primary">
+                  <input type="submit" value="subtract" name="operator" class="btn btn-sm btn-info">
+                  <input type="submit" value="divide" name="operator" class="btn btn-sm btn-warning">
+                  <input type="submit" value="multiply" name="operator" class="btn btn-sm btn-danger">
+                  <br><br>
+                  <label>Total:</label>
+                  <?php
+                if(isset($_GET['operator'])) {
+                    $result1 = $_GET['num1'];
+                    $result2 = $_GET['num2'];
+                    $operator = $_GET['operator'];
+                    switch($operator){
+                      case "add":
+                        echo $result1 + $result2;
+                      break;
+                      case "subtract":
+                        echo  $result1 - $result2;
+                      break;
+                      case "divide":
+                        echo  $result1 / $result2;
+                      break;
+                      case "multiply":
+                        echo  $result1 * $result2;
+                      break;
+                    }
+                }
+              ?>
+              
+                </div>
+              </form>
+              </div>
+            </div><!-- /.card -->
+            </div>
+    </div>
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->

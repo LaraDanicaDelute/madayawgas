@@ -1,12 +1,9 @@
 import { createStore } from 'vuex';
+import stocks  from './modules/stocks';
 
-const store = createStore ({
-    state: {
 
-    },
-getters : {
-
-}
-});
-
-export default store
+export default createStore ({
+    modules: {
+        stocks
+    }
+})

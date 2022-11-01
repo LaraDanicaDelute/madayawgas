@@ -31,5 +31,6 @@ Route::middleware([
 Route::middleware(['auth:sanctum'])->group(function() {
 
     Route::resource('stocks',  StocksController::class);
+    Route::get('/api/stocks', [StocksController::class, 'getStocksJson']);
     Route::resource('purchases', PurchasesController::class);
 });

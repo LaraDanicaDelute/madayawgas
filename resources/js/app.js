@@ -1,14 +1,13 @@
 import './bootstrap';
 import { createApp } from 'vue';
-import exampleComponent from './components/exampleComponent.vue';
+//import exampleComponent from './components/exampleComponent.vue';
 import addPurchase from './components/purchases/addPurchase.vue';
 import store from './store'
 
-createApp (exampleComponent).use(store).mount('#app');
+//createApp (exampleComponent).mount('#app');
 
-createApp (addPurchase).mount('#addPurchase');
+createApp (addPurchase).use(store).mount('#addPurchase');
 
+//window.Alpine = Alpine;
 
-window.Alpine = Alpine;
-
-Alpine.start();
+//Alpine.start();
