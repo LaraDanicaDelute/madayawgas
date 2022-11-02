@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Stock;
+use Illuminate\Support\Facades\Validator;
+
 
 
 
@@ -38,24 +40,23 @@ class StocksController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'stock_code' => 'required|unique:stocks',
-            'product_name' => 'required|min:5|max:100',
-            'total_stocks' => 'required',
-            'original_price' => 'required',
-            'retail_price' => 'required',
+        $validate = Validator::make($request->all(), [
+            'stock_code' => 'required|numeric',
+            'product_name' => 'required|numeric',
+            'total_stocks' => 'required|numeric',
+            'original_price' => 'required|numeric',
+            'retail_price'=> 'required|numeric'
+
         ]);
 
-        $stock = new Stock();
-        $stock-> stock_code = $request->stock_code;
-        $stock->product_name = $request->product_name;
-        $stock->total_stocks = $request->total_stocks;
-        $stock->original_price = $request->original_price;
-        $stock->retail_price = $request->retail_price;
-        $stock->save();
-
-        flash(message: 'Product Stock successfully added!')->success();
-        return back();
+        if($validate->fails()) {
+           return response()->json([
+                'success' => false,
+                'errors' => $validate->errors()
+            ], \Illuminate\Http\Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+       
+        return $request->all();
     }
     
 

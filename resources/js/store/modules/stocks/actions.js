@@ -13,5 +13,15 @@ export default {
         .catch(err=>{
             console.log(err.response)
         })
+    },
+    [actions.ADD_STOCKS]({commit}, payload) {
+        Axios.post('/stocks', payload)
+         .then(res=>{
+
+         })
+         .catch(err=> {
+           // console.log(response.data.errors)
+            commit(mutations.SET_ERRORS, err.response.data.errors)
+         })
     }
 }

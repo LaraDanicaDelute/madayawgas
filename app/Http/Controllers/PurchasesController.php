@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Models\Purchase;
+use Illuminate\Support\Facades\Validator;
 
 
 class PurchasesController extends Controller
@@ -36,7 +38,22 @@ class PurchasesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = Validator::make($request->all(), [
+            'stock_code' => 'required|numeric',
+            'item_price' => 'required|numeric',
+            'number_of_items' => 'required|numeric',
+            'total_payment' => 'required|numeric',
+
+        ]);
+
+        if($validate->fails()) {
+           return response()->json([
+                'success' => false,
+                'errors' => $validate->errors()
+            ], \Illuminate\Http\Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+       
+        return $request->all();
     }
 
     /**

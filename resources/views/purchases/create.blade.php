@@ -33,7 +33,7 @@
                 <h5 class="card-title">Calculator</h5>
                 <br>
                 
-                <form role="form" action="<?php  $_SERVER['PHP_SELF'] ;?>"method="GET">
+                <form role="form" method="GET">
                 
                 <div class="card-body">
                     
