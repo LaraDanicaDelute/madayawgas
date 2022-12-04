@@ -15,14 +15,18 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('stock_code');
             $table->unsignedBigInteger('item_price');
-            $table->decimal('number_of_items');
+            $table->integer('number_of_items');
             $table->decimal('total_payment');
             $table->timestamps();
-
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->foreign('stock_code')->references('id')->on('stocks')->onDelete('cascade');
-            $table->foreign('item_price')->references('id')->on('stocks')->onDelete('cascade');
+           // $table->foreign('item_price')->references('id')->on('stocks')->onDelete('cascade');
+
+            
+
 
         });
     }

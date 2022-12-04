@@ -17,12 +17,12 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
-
     /**
      * The attributes that are mass assignable.
      *
      * @var string[]
      */
+    
     protected $fillable = [
         'name',
         'email',
@@ -58,4 +58,6 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+  
 }

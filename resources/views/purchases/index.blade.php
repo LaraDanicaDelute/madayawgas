@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
 
-    <div class="content-header">
+    <div class="content-header"> 
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
@@ -33,11 +33,11 @@
                 <table class ="table table-bordered datatable">
                  <thead> 
                   <tr>
+                    <th>Encoded by</th>
                     <th>Stock Code</th>
                     <th>Price per Item</th>
                     <th>Number of Items</th>
                     <th>Total Payment</th>
-                    <th>Retail Price</th>
                     <th>Added Date</th>
                     <th>ACTION</th>
                   </tr> 
@@ -46,7 +46,8 @@
                   @if($purchases)
                     @foreach($purchases as $key => $purchase)
                     <tr>
-                      <td>{{ $purchase->stock_code ?? '' }}</td>
+                      <td>{{ $purchase->user_id ?? ''}}</td>
+                      <td>{{ $purchase->stock->stock_code ?? '' }}</td>
                       <td>{{ $purchase->item_price ?? '' }}</td>
                       <td>{{ $purchase->number_of_items ?? '' }}</td>
                       <td>{{ $purchase->total_payment ?? '' }}</td>

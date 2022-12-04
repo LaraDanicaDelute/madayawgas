@@ -1,11 +1,7 @@
 <template>
   <div class= "col-sm-12" v-if="isErrors">
-    <div class="alert alert-danger" role="alert">
-    <ul> 
-      <li v-for="(item, index) in errors" :key="index">
+    <div  v-for="(item, index) in errors" :key="index" class="alert alert-danger" role="alert">
         {{ item [0] }}
-      </li>
-    </ul>
     </div>
 
   </div>

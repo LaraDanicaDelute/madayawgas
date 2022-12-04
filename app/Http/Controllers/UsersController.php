@@ -1,15 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\Models\Purchase;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 
-
-class PurchasesController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +17,8 @@ class PurchasesController extends Controller
      */
     public function index()
     {
-        $purchases = Purchase::with(['stock'])->get();
-        return view('purchases.index', compact('purchases'));
-
+        $users = User::orderby('created_at', 'DESC')->get();
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -30,7 +28,7 @@ class PurchasesController extends Controller
      */
     public function create()
     {
-        return view (view: 'purchases.create');
+        return view ('users.create');
     }
 
     /**
@@ -41,32 +39,21 @@ class PurchasesController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = Validator::make($request->all(), [
-            'stock_code' => 'required|numeric',
-            'item_price' => 'required',
-            'number_of_items' => 'required',
-        
+        $this->validate($request, [
+            'name' => 'required|min:2|max:100',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8|max:50|confirmed'
         ]);
 
-        if($validate->fails()) {
-            return response()->json([
-                'success' => false,
-                'errors' => $validate->errors()
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
+        $user = new User();
+        $user->name = $request->name;
+        $user->email= $request->email;
+        $user->password = Hash::make($request->password);
+        $user->save();
 
-        //store 
-        $purchase = new Purchase();
-        $purchase->user_id = Auth::id();
-        $purchase->stock_code = $request->stock_code;
-        $purchase->item_price = $request->item_price;
-        $purchase->number_of_items = $request->number_of_items;
-        $purchase->total_payment = $request->total_payment;
-        $purchase->save();
-        
-        return response()->json([
-            'success' => true,
-        ], Response::HTTP_OK);
+        flash(message: 'Product Stock successfully updated!')->success();
+        return redirect()->route('users.index');
+       
     }
 
     /**
@@ -88,7 +75,7 @@ class PurchasesController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -100,7 +87,7 @@ class PurchasesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       
     }
 
     /**
@@ -111,7 +98,15 @@ class PurchasesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        flash(message: 'User successfully deleted!')->success();
+        return redirect()->route('users.index');
     }
 
+    public function logout(){
+        Auth::logout();
+        return redirect('/login');
+    }
 }

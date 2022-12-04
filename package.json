@@ -20,6 +20,7 @@
     "dependencies": {
         "@vitejs/plugin-vue": "^3.2.0",
         "@vue/devtools-api": "^6.4.5",
+        "ajax": "^0.0.4",
         "bootstrap-select": "^1.13.18",
         "js": "^0.1.0",
         "node": "^19.0.0",

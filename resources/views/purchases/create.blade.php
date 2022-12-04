@@ -1,4 +1,3 @@
-
 @extends('layouts.master')
 @section('content')
 
@@ -33,7 +32,7 @@
                 <h5 class="card-title">Calculator</h5>
                 <br>
                 
-                <form role="form" method="GET">
+                <form role="form"  @submit.prevent="submit" method="GET">
                 
                 <div class="card-body">
                     

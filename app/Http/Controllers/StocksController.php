@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Stock;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -30,6 +30,7 @@ class StocksController extends Controller
     public function create()
     {
         return view (view: 'stocks.create');
+
     }
 
     /**
@@ -41,22 +42,35 @@ class StocksController extends Controller
     public function store(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'stock_code' => 'required|numeric',
-            'product_name' => 'required|numeric',
-            'total_stocks' => 'required|numeric',
-            'original_price' => 'required|numeric',
-            'retail_price'=> 'required|numeric'
-
+            'stock_code' => 'required|unique:stocks',
+            'product_name' => 'required|min:5|max:100',
+            'total_stocks' => 'required',
+            'original_price' => 'required',
+            'retail_price' => 'required',
         ]);
 
+        
         if($validate->fails()) {
-           return response()->json([
+            return response()->json([
                 'success' => false,
                 'errors' => $validate->errors()
-            ], \Illuminate\Http\Response::HTTP_UNPROCESSABLE_ENTITY);
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-       
-        return $request->all();
+
+        $stock = new Stock();
+        $stock-> stock_code = $request->stock_code;
+        $stock->product_name = $request->product_name;
+        $stock->total_stocks = $request->total_stocks;
+        $stock->original_price = $request->original_price;
+        $stock->retail_price = $request->retail_price;
+        $stock->save();
+
+          
+        return response()->json([
+            'success' => true,
+        ], Response::HTTP_OK);
+        
+
     }
     
 
@@ -129,13 +143,13 @@ class StocksController extends Controller
         return redirect()->route('stocks.index');
 
     }
-
+//HANDLE AJAX REQUEST
     public function getStocksJson() {
         $stocks = Stock::all();
 
         return response()->json([
             'success' => true,
             'data' => $stocks
-        ],Response::HTTP_OK);
+        ], Response::HTTP_OK );
     }
 }

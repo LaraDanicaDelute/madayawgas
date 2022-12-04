@@ -5,13 +5,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Product Stocks</h1> <br>
-            <a href="{{route('stocks.create') }}"  class="btn btn-md btn-primary"> <i class="fa fa-plus"></i> Add Stock</a>
+            <h1 class="m-0 text-dark">Users</h1> <br>
+            <a href="{{route('users.create') }}"  class="btn btn-md btn-primary"> <i class="fa fa-plus"></i> Add User</a>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-              <li class="breadcrumb-item active">Add Product Stocks</li>
+              <li class="breadcrumb-item active">User List</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -28,44 +28,43 @@
             <div class="card card-primary card-outline">
               <div class="card-body">
                 
-                <h5 class="card-title">Add Product Stock</h5><br>
+                <h5 class="card-title">Users</h5><br>
                 
                 <br>
                 <table class ="table table-bordered datatable">
                  <thead> 
                   <tr>
-                    <th>Stock NO.</th>
-                    <th>Stock Code</th>
-                    <th>Product Name</th>
-                    <th>Total Stocks</th>
-                    <th>Orignal Price</th>
-                    <th>Retail Price</th>
-                    <th>Added Date</th>
+                    <th>User NO.</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Date Added</th>
                     <th>ACTION</th>
                   </tr> 
                 </thead>
                 <tbody>
-                  @if($stocks)
-                    @foreach($stocks as $key => $stock)
+                  @if($users)
+                    @foreach($users as $key => $user)
                     <tr>
-                      <td>{{ $stock->id ?? '' }}</td>
-                      <td>{{ $stock->stock_code ?? '' }}</td>
-                      <td>{{ $stock->product_name ?? '' }}</td>
-                      <td>{{ $stock->total_stocks ?? '' }}</td>
-                      <td>{{ $stock->original_price ?? '' }}</td>
-                      <td>{{ $stock->retail_price ?? '' }}</td>
-                      <td> {{ $stock->created_at ?? '' }}</td>
+                      <td>{{ ++$key }}</td>
+                      <td>{{ $user->name ?? '' }}</td>
+                      <td>{{ $user->email ?? '' }}
+                         @if(auth()->id() == $user->id) (you)
+                          @endif
+                      </td>
+                      <td>{{ $user->created_at ?? '' }}</td>
                       <td> 
-                        <a href="{{ route('stocks.edit', $stock->id) }}"  class="btn btn-sm btn-info">
-                          <i class="fa fa-edit"></i> Edit</a>
-
-                        <a href="javascript:;"  class="btn btn-sm btn-danger sa-delete" data-form-id="stock-delete-{{  $stock->id }}">
+                   
+                   
+                       
+                      @if(auth()->id() != $user ->id )
+                        <a href="javascript:;"  class="btn btn-sm btn-danger sa-delete" data-form-id="user-delete-{{  $user->id }}">
                           <i class="fa fa-trash"></i> Delete</a>
-
-                        <form id="stock-delete-{{  $stock->id }}" action="{{ route('stocks.destroy', $stock->id) }}" method="post">
+                        
+                        <form id="user-delete-{{  $user->id }}" action="{{ route('users.destroy', $user->id) }}" method="post">
                           @csrf
                           @method('DELETE')
                         </form> 
+                        @endif
                       </td>
                     </tr>
                     @endforeach

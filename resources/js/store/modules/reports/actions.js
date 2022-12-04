@@ -3,10 +3,10 @@ import * as mutations from '../../mutation-types'
 import Axios from 'axios'
 
 export default {
-    [actions.ADD_PURCHASE]({commit}, payload) {
-        Axios.post('/purchases', payload)
+    [actions.ADD_REPORT]({commit}, payload) {
+        Axios.post('/reports', payload)
          .then(res=>{
-              window.location = '/purchases'
+              window.location = '/reports'
          })
          .catch(err=> {
            //console.log(err.response.data.errors)

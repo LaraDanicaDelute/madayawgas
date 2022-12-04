@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\StocksController;
 use \App\Http\Controllers\PurchasesController;
+use \App\Http\Controllers\ReportsController;
+use \App\Http\Controllers\UsersController;
+use \App\Http\Controllers\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,7 +18,7 @@ use \App\Http\Controllers\PurchasesController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
 
 Route::middleware([
@@ -27,11 +30,19 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+Route::get('/logout', [UsersController::class, 'logout'])->name('users.logout');
 
 Route::middleware(['auth:sanctum'])->group(function() {
+    Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
+    Route::resource('users', UsersController::class);
+   
 
-    Route::resource('stocks',  StocksController::class);
-    Route::get('/api/stocks', [StocksController::class, 'getStocksJson']);
+    Route::resource('stocks', StocksController::class);
     Route::resource('purchases', PurchasesController::class);
+    Route::resource('reports', ReportsController::class);
+    Route::get('/api/stocks', [StocksController::class, 'getStocksJson']);
+    
+
+    //Route::post('/purchases/create', [PurchasesController::class, 'store']);
     
 });

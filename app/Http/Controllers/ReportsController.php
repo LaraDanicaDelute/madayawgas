@@ -1,26 +1,40 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\Report;
 use App\Models\Purchase;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
-
-
-class PurchasesController extends Controller
+class ReportsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
+    
     {
-        $purchases = Purchase::with(['stock'])->get();
-        return view('purchases.index', compact('purchases'));
-
+        
+        $reports = DB::table('purchases')
+                    ->join('reports', function ($q) {
+                     $q->on('purchases.stock_code', '=', 'reports.stock_code');
+                    })
+                    ->select('purchases.stock_code', DB::raw('SUM(purchases.number_of_items) as sold_items'), 
+                    DB::raw('SUM(purchases.total_payment) as total_sales'))
+                    ->groupBy('purchases.stock_code')
+                    ->get();     
+  
+                    
+        return view('reports.index', compact('reports'));
+     
+      
     }
 
     /**
@@ -30,7 +44,7 @@ class PurchasesController extends Controller
      */
     public function create()
     {
-        return view (view: 'purchases.create');
+       return view ('reports.create');
     }
 
     /**
@@ -43,9 +57,7 @@ class PurchasesController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'stock_code' => 'required|numeric',
-            'item_price' => 'required',
-            'number_of_items' => 'required',
-        
+
         ]);
 
         if($validate->fails()) {
@@ -56,13 +68,9 @@ class PurchasesController extends Controller
         }
 
         //store 
-        $purchase = new Purchase();
-        $purchase->user_id = Auth::id();
-        $purchase->stock_code = $request->stock_code;
-        $purchase->item_price = $request->item_price;
-        $purchase->number_of_items = $request->number_of_items;
-        $purchase->total_payment = $request->total_payment;
-        $purchase->save();
+        $report = new Report();
+        $report->stock_code = $request->stock_code;
+        $report->save();
         
         return response()->json([
             'success' => true,
@@ -77,7 +85,7 @@ class PurchasesController extends Controller
      */
     public function show($id)
     {
-        //
+      
     }
 
     /**
@@ -113,5 +121,4 @@ class PurchasesController extends Controller
     {
         //
     }
-
 }
