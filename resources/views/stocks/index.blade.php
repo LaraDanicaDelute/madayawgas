@@ -34,13 +34,10 @@
                 <table class ="table table-bordered datatable">
                  <thead> 
                   <tr>
-                    <th>Stock NO.</th>
                     <th>Stock Code</th>
                     <th>Product Name</th>
                     <th>Total Stocks</th>
-                    <th>Orignal Price</th>
                     <th>Retail Price</th>
-                    <th>Added Date</th>
                     <th>ACTION</th>
                   </tr> 
                 </thead>
@@ -48,31 +45,21 @@
                   @if($stocks)
                     @foreach($stocks as $key => $stock)
                     <tr>
-                      <td>{{ $stock->id ?? '' }}</td>
                       <td>{{ $stock->stock_code ?? '' }}</td>
                       <td>{{ $stock->product_name ?? '' }}</td>
                       <td>{{ $stock->total_stocks ?? '' }}</td>
-                      <td>{{ $stock->original_price ?? '' }}</td>
                       <td>{{ $stock->retail_price ?? '' }}</td>
-                      <td> {{ $stock->created_at ?? '' }}</td>
                       <td> 
-                        <a href="{{ route('stocks.edit', $stock->id) }}"  class="btn btn-sm btn-info">
-                          <i class="fa fa-edit"></i> Edit</a>
-
-                        <a href="javascript:;"  class="btn btn-sm btn-danger sa-delete" data-form-id="stock-delete-{{  $stock->id }}">
-                          <i class="fa fa-trash"></i> Delete</a>
-
-                        <form id="stock-delete-{{  $stock->id }}" action="{{ route('stocks.destroy', $stock->id) }}" method="post">
-                          @csrf
-                          @method('DELETE')
-                        </form> 
+                      <a href="{{ route('stocks.show', $stock->id) }}"  class="btn btn-sm btn-primary">
+                          <i class="fa fa-desktop"></i> Show</a>
+                        
                       </td>
                     </tr>
                     @endforeach
                 @endif
                 </tbody>
                 </table>
-              </form>
+              
               </div>
             </div><!-- /.card -->
           </div>

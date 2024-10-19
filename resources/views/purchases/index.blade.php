@@ -51,18 +51,15 @@
                       <td>{{ $purchase->item_price ?? '' }}</td>
                       <td>{{ $purchase->number_of_items ?? '' }}</td>
                       <td>{{ $purchase->total_payment ?? '' }}</td>
-                      <td> {{ $purchase->created_at ?? '' }}</td>
+                      <td>{{ $purchase->created_at ?? ''}}</td>
                       <td> 
-                        <a href="{{ route('purchases.edit', $purchase->id) }}"  class="btn btn-sm btn-info">
-                          <i class="fa fa-edit"></i> Edit</a>
-
+                      <a href="{{ route('purchases.edit', $purchase->id) }}"  class="btn btn-sm btn-info"> <i class="fa fa-edit"></i> Edit</a>
                       </td>
                     </tr>
                     @endforeach
                 @endif
                 </tbody>
                 </table>
-              </form>
               </div>
             </div><!-- /.card -->
           </div>

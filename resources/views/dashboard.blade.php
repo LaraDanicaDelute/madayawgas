@@ -36,7 +36,7 @@
               <div class="inner">
                 <h3>{{ $purchases ?? 0 }}</h3>
 
-                <p>Totol Purchase Record</p>
+                <p>Total Purchase Record</p>
               </div>
               <div class="icon">
               <i class="fa fa-solid fa-layer-group"></i>
@@ -55,43 +55,47 @@
               </div>
               <div class="icon">
               <i class="fa fa-user"></i>
-              </div>
+              </div> 
             </div>
           </div>
           <!-- ./col -->
         </div>
+  
 
 
-<div class="card card-primary card-outline">
-    <div class="card-body">
-    <table class ="table table-bordered datatable table-sm ">
-                 <thead> 
+    <div class="card card-primary card-outline"> 
+      <div class ="card-body">
+        <table class="table table-bordered table-sm">
+        <thead> 
                   <tr>
-                    <th>Stock NO.</th>
+                    <th>Encoded by</th>
                     <th>Stock Code</th>
-                    <th>Product Name</th>
-                    <th>Total Stocks</th>
-                    <th>Retail Price</th>
+                    <th>Price per Item</th>
+                    <th>Number of Items</th>
+                    <th>Total Payment</th>
+                    <th>Added Date</th>
                   </tr> 
                 </thead>
                 <tbody>
-                  @if($prod_stock)
-                    @foreach($prod_stock as $key => $stock)
+                  @if($recent_purchase)
+                    @foreach($recent_purchase as $key => $purchase)
                     <tr>
-                      <td>{{ ++$key }}</td>
-                      <td>{{ $stock->stock_code ?? '' }}</td>
-                      <td>{{ $stock->product_name ?? '' }}</td>
-                      <td>{{ $stock->total_stocks ?? '' }}</td>
-                      <td>{{ $stock->retail_price ?? '' }}</td>
-                     
+                      <td>{{ $purchase->user_id ?? ''}}</td>
+                      <td>{{ $purchase->stock->stock_code ?? '' }}</td>
+                      <td>{{ $purchase->item_price ?? '' }}</td>
+                      <td>{{ $purchase->number_of_items ?? '' }}</td>
+                      <td>{{ $purchase->total_payment ?? '' }}</td>
+                      <td>{{ $purchase->created_at ?? ''}}</td>
                     </tr>
                     @endforeach
                 @endif
                 </tbody>
-                </table>
+        </table>
+      </div>
     </div>
-</div>
-</div>
-</div>
+    </div>
+    </div>
+    
+    
 
     @endsection

@@ -35,6 +35,7 @@
                     <th>Stock No.</th>
                     <th># of Sold Items</th>
                     <th>Total Sales</th>
+                   <!-- <th>ACTION</th> -->
                     
                   </tr> 
                 </thead>
@@ -45,6 +46,18 @@
                       <td>{{ $report->stock_code ?? ''}}</td>
                       <td>{{ $report->sold_items ?? ''}}</td>
                       <td>{{ $report->total_sales ?? ''}}</td>
+                    <!--  <td>
+
+                      <a href="javascript:;"  class="btn btn-sm btn-danger sa-delete" data-form-id="user-delete-{{  $report->stock_code }}">
+                          <i class="fa fa-trash"></i> Delete</a>
+                        
+                        <form id="user-delete-{{  $report->stock_code }}" action="{{ route('reports.destroy', $report->stock_code) }}" method="post">
+                          @csrf
+                          @method('DELETE')
+                        </form> 
+
+
+                      </td> -->
                     </tr>
                  @endforeach
                  @endif

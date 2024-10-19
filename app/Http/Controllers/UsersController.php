@@ -51,7 +51,7 @@ class UsersController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        flash(message: 'Product Stock successfully updated!')->success();
+        flash(message: 'User successfully created!')->success();
         return redirect()->route('users.index');
        
     }
@@ -75,7 +75,8 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        
+        $user = User::findOrFail($id);
+        return view ('users.edit', compact('user'));
     }
 
     /**
@@ -87,8 +88,26 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'name' => 'required|min:2|max:100',
+            'email' => 'required|email|unique:users,email,'. $id,
+            'password' => 'nullable|min:8|max:50|confirmed'
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->email= $request->email;
        
+        if ($request->has('password')) {
+            $user->password = Hash::make($request->name);
+        }
+
+        $user->save();
+
+        flash(message: 'User information successfully updated!')->success();
+        return redirect()->route('users.index');
     }
+        
 
     /**
      * Remove the specified resource from storage.

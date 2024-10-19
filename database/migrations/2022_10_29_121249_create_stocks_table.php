@@ -17,6 +17,7 @@ return new class extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('stock_code', length: 50 );
             $table->string('product_name', length: 100);
             $table->integer('total_stocks');

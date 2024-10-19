@@ -18,7 +18,8 @@ class PurchasesController extends Controller
      */
     public function index()
     {
-        $purchases = Purchase::with(['stock'])->get();
+        $purchases = Purchase::with(['stock'])
+                    ->orderby('created_at', 'DESC')->get();
         return view('purchases.index', compact('purchases'));
 
     }
@@ -45,6 +46,7 @@ class PurchasesController extends Controller
             'stock_code' => 'required|numeric',
             'item_price' => 'required',
             'number_of_items' => 'required',
+            'total_payment' => ''
         
         ]);
 
@@ -61,7 +63,7 @@ class PurchasesController extends Controller
         $purchase->stock_code = $request->stock_code;
         $purchase->item_price = $request->item_price;
         $purchase->number_of_items = $request->number_of_items;
-        $purchase->total_payment = $request->total_payment;
+        $purchase->total_payment = $request->item_price * $request->number_of_items; 
         $purchase->save();
         
         return response()->json([
@@ -77,7 +79,8 @@ class PurchasesController extends Controller
      */
     public function show($id)
     {
-        //
+        $purchase = Purchases::where('id', $id)->first();
+        return view('purchases.show', compact('purchase'));
     }
 
     /**
@@ -88,7 +91,8 @@ class PurchasesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $purchase = Purchase::findOrFail($id);
+       return view('purchases.edit', compact('purchase'));
     }
 
     /**
@@ -100,7 +104,20 @@ class PurchasesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'item_price' => 'max:100,'. $id,
+            'number_of_items' => 'min:1|max:11,'. $id,
+            'total_payment' => 'min:2|max:11,'. $id,
+        ]);
+
+        $purchase = Purchase::findOrFail($id);
+        $purchase->item_price = $request->item_price;
+        $purchase->number_of_items = $request->number_of_items;
+        $purchase->total_payment = $request->item_price *$request->number_of_items;
+        $purchase->save();
+
+        flash(message: 'Purchase Updated!')->success();
+        return redirect()->route('purchases.index');
     }
 
     /**

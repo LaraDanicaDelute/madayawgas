@@ -18,7 +18,8 @@ class StocksController extends Controller
      */
     public function index()
     {
-        $stocks = Stock::orderby('created_at', 'DESC')->get();
+        $stocks = Stock::orderby('created_at', 'DESC')
+        ->orderby('created_at', 'DESC')->get();
         return view('stocks.index', compact('stocks'));
     }
 
@@ -58,6 +59,7 @@ class StocksController extends Controller
         }
 
         $stock = new Stock();
+        $stock->user_id = Auth::id();
         $stock-> stock_code = $request->stock_code;
         $stock->product_name = $request->product_name;
         $stock->total_stocks = $request->total_stocks;
@@ -82,9 +84,11 @@ class StocksController extends Controller
      */
     public function show($id)
     {
-        //
+        $stock = Stock::where('id', $id)->first();
+        return view('stocks.show', compact('stock'));
     }
 
+  
     /**
      * Show the form for editing the specified resource.
      *
@@ -111,16 +115,16 @@ class StocksController extends Controller
             //'stock_code' => 'max:255,'. $id,
             //'product_name' => 'min:5|max:100,'. $id,
             'total_stocks' => 'max:100,'. $id,
-            //'original_price' => 'min:2|max:11,'. $id,
-            //'retail_price' => 'min:2|max:11,'. $id,
+            'original_price' => 'min:2|max:11,'. $id,
+            'retail_price' => 'min:2|max:11,'. $id,
         ]);
 
         $stock = Stock::findOrFail($id);
         //$stock->stock_code = $request->stock_code;
         //$stock->product_name = $request->product_name;
         $stock->total_stocks = $request->total_stocks;
-        //$stock->original_price = $request->original_price;
-        //$stock->retail_price = $request->retail_price;
+        $stock->original_price = $request->original_price;
+        $stock->retail_price = $request->retail_price;
         $stock->save();
 
         flash(message: 'Product Stock successfully updated!')->success();

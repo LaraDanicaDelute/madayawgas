@@ -37,7 +37,7 @@
               <p>Dashboard</p>
             </a>
           </li>
-        <li class="nav-item">
+      <li class="nav-item">
             <a href="{{ route('purchases.index')}}" class="nav-link  {{ request()->is('purchases*') ? 'active' : ''}}">
             <i class="fa fa-regular fa-clipboard"></i>
               <p>Product Purchases Record</p>

@@ -6,7 +6,8 @@ use \App\Http\Controllers\PurchasesController;
 use \App\Http\Controllers\ReportsController;
 use \App\Http\Controllers\UsersController;
 use \App\Http\Controllers\DashboardController;
-/*
+
+/*php artisan route:clear
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------

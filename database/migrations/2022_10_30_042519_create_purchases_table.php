@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('stock_code');
             $table->unsignedBigInteger('item_price');
             $table->integer('number_of_items');
-            $table->decimal('total_payment');
+            $table->decimal('total_payment', 10,2)->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->foreign('stock_code')->references('id')->on('stocks')->onDelete('cascade');

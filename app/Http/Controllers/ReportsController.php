@@ -57,6 +57,8 @@ class ReportsController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'stock_code' => 'required|numeric',
+            'sold_items' => 'numeric',
+            'total_sales' => 'numeric'
 
         ]);
 
@@ -70,6 +72,8 @@ class ReportsController extends Controller
         //store 
         $report = new Report();
         $report->stock_code = $request->stock_code;
+        $report->sold_items = $request->sold_items;
+        $report->total_sales = $request->total_sales;
         $report->save();
         
         return response()->json([
@@ -119,6 +123,10 @@ class ReportsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $report = Report::findOrFail($id);
+        $report->delete();
+
+        flash(message: 'Product Stock successfully deleted!')->success();
+        return redirect()->route('reports.index');
     }
 }

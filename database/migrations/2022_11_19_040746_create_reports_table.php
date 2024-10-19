@@ -18,8 +18,11 @@ return new class extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
+            $table->integer('sold_items')->nullable();
+            $table->integer('total_sales')->nullable();
             $table->timestamps();
-            $table->unsignedBigInteger('stock_code');
+            $table->unsignedBigInteger('stock_code')->unique();
+            
 
             $table->foreign('stock_code')->references('id')->on('stocks')->onDelete('cascade');
         });

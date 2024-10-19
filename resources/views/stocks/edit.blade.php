@@ -56,7 +56,7 @@
                     @endif
                   </div>
 
-                   <!--<div class="form-group">
+                   <div class="form-group">
                     <label for="original_price">Product Price</label>
                     <input name="original_price" type="number" class="form-control" id="original_price" placeholder="enter price product original price" value="{{ $stock->original_price }}">
                     @if($errors->has('original_price'))
@@ -70,12 +70,12 @@
                     @if($errors->has('retail_price'))
                     <span class="text-danger">{{ $errors->first('retail_price') }}</span>
                     @endif
-                  </div>  -->
+                  </div>  
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-sm btn-primary"><i class = "fa fa-save"></i> Submit</button>
+                  <button type="submit" class="btn btn-sm btn-primary"><i class = "fa fa-save"></i> Save Changes</button>
                 </div>
               </form>
               </div>

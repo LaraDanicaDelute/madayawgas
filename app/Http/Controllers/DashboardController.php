@@ -15,6 +15,8 @@ class DashboardController extends Controller
         $purchases = Purchase::count();
         $prod_stock = Stock::get();
 
-        return view('dashboard', compact('stocks', 'users', 'purchases', 'prod_stock'));
+        $recent_purchase = Purchase::Latest()->limit(20)->get();
+
+        return view('dashboard', compact('stocks', 'users', 'purchases', 'prod_stock', 'recent_purchase'));
     }
 }
